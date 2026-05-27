@@ -1,0 +1,9 @@
+{
+  "no_permission": "Je hebt hier geen toegang toe.",
+  "not_enough_items": "Je hebt niet genoeg items.",
+  "inventory_full": "Je inventory is vol.",
+  "action_cancelled": "Actie geannuleerd.",
+  "target_interact": "Interactie",
+  "error": "Er is iets misgegaan.",
+  "bridge_ready": "Bridge gereed."
+}

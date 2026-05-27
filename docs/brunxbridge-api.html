@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BrunxBridge API Documentation</title>
+  <style>
+    :root{--bg:#070a12;--panel:rgba(255,255,255,.055);--panel2:rgba(255,255,255,.08);--text:#edf3ff;--muted:#9aa8c7;--line:rgba(255,255,255,.12);--accent:#6ee7ff;--accent2:#9b8cff;--ok:#4ade80;--warn:#facc15;--bad:#fb7185;--code:#0b1020}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:radial-gradient(circle at 20% 0%,rgba(110,231,255,.18),transparent 35%),radial-gradient(circle at 90% 10%,rgba(155,140,255,.16),transparent 30%),var(--bg);color:var(--text);line-height:1.65}.noise{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}header{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);background:rgba(7,10,18,.78);backdrop-filter:blur(18px)}.nav{max-width:1220px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:16px 22px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.2px}.brand-mark{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 35px rgba(110,231,255,.25)}.nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:700;font-size:14px}.nav a:hover{color:var(--text)}.wrap{max-width:1220px;margin:auto;padding:44px 22px 90px}.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:stretch}.card{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel2),var(--panel));border-radius:28px;box-shadow:0 24px 80px rgba(0,0,0,.25);overflow:hidden}.hero-main{padding:44px;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(110,231,255,.3);background:rgba(110,231,255,.08);color:#bff6ff;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800}.pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 16px var(--ok)}h1{font-size:clamp(42px,6vw,76px);line-height:.95;margin:22px 0 18px;letter-spacing:-3px}h2{font-size:32px;margin:0 0 14px;letter-spacing:-1px}h3{font-size:20px;margin:0 0 8px}.lead{font-size:18px;color:var(--muted);max-width:740px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:13px 16px;color:var(--text);text-decoration:none;font-weight:900;background:rgba(255,255,255,.06);transition:.2s}.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.1)}.btn.primary{border-color:rgba(110,231,255,.4);background:linear-gradient(135deg,rgba(110,231,255,.22),rgba(155,140,255,.22))}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:20px}.stat{padding:22px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.045)}.stat strong{display:block;font-size:30px}.stat span{color:var(--muted);font-weight:700}.layout{display:grid;grid-template-columns:270px 1fr;gap:26px;margin-top:30px}.side{position:sticky;top:86px;align-self:start;padding:18px}.side a{display:block;padding:10px 12px;color:var(--muted);text-decoration:none;border-radius:12px;font-weight:800;font-size:14px}.side a:hover{background:rgba(255,255,255,.07);color:var(--text)}section{padding:30px;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{padding:20px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.045)}.feature p{margin:0;color:var(--muted)}.table{width:100%;border-collapse:separate;border-spacing:0 10px}.table th{text-align:left;color:#c6d2ed;font-size:13px;text-transform:uppercase;letter-spacing:.08em}.table td,.table th{padding:12px 14px}.table tr td{background:rgba(255,255,255,.045);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.table tr td:first-child{border-left:1px solid var(--line);border-radius:14px 0 0 14px;font-weight:900;color:#c8f7ff}.table tr td:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0;color:var(--muted)}code,kbd{background:rgba(110,231,255,.09);border:1px solid rgba(110,231,255,.18);color:#c8f7ff;padding:2px 7px;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}pre{position:relative;background:linear-gradient(180deg,#0b1020,#080c18);border:1px solid var(--line);border-radius:20px;padding:20px;overflow:auto;color:#dbeafe}pre code{background:transparent;border:0;padding:0;color:inherit}.copy{position:absolute;top:10px;right:10px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:var(--text);border-radius:10px;padding:7px 10px;cursor:pointer;font-weight:800}.tag{display:inline-flex;margin:4px 6px 4px 0;padding:6px 9px;border-radius:999px;background:rgba(155,140,255,.13);border:1px solid rgba(155,140,255,.22);color:#ddd8ff;font-weight:800;font-size:13px}.callout{border:1px solid rgba(110,231,255,.28);background:rgba(110,231,255,.075);padding:18px;border-radius:20px;color:#c8f7ff}.fade{animation:fade .7s ease both}.rise{animation:rise .7s ease both}@keyframes fade{from{opacity:0}to{opacity:1}}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@media(max-width:920px){.hero,.layout{grid-template-columns:1fr}.side{position:relative;top:0}.grid{grid-template-columns:1fr}.nav nav{display:none}.hero-main{padding:28px}h1{letter-spacing:-2px}.stats{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="noise"></div>
+<header>
+  <div class="nav">
+    <div class="brand"><div class="brand-mark"></div><span>BrunxBridge Docs</span></div>
+    <nav><a href="#overview">Overview</a><a href="#install">Install</a><a href="#exports">Exports</a><a href="#examples">Examples</a><a href="#support">Support</a></nav>
+  </div>
+</header>
+<main class="wrap fade">
+  <div class="hero">
+    <div class="card hero-main rise">
+      <div class="eyebrow"><span class="pulse"></span> Production Bridge API</div>
+      <h1>One bridge for every serious FiveM resource.</h1>
+      <p class="lead">BrunxBridge provides a stable integration layer for frameworks, inventories, targets, UI actions, callbacks, money handling, jobs and common server utilities.</p>
+      <div class="hero-actions"><a class="btn primary" href="#exports">View exports</a><a class="btn" href="#examples">Integration examples</a></div>
+    </div>
+    <div class="card stats rise">
+      <div class="stat"><strong>6</strong><span>Framework modes</span></div>
+      <div class="stat"><strong>10+</strong><span>Inventory adapters</span></div>
+      <div class="stat"><strong>3</strong><span>Target modes</span></div>
+      <div class="stat"><strong>ox_lib</strong><span>UI layer</span></div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="card side">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#install">Installation</a>
+      <a href="#configuration">Configuration</a>
+      <a href="#client-exports">Client exports</a>
+      <a href="#server-exports">Server exports</a>
+      <a href="#examples">Examples</a>
+      <a href="#support">Supported resources</a>
+    </aside>
+
+    <div>
+      <section id="overview" class="card">
+        <h2>Overview</h2>
+        <p class="lead">Use BrunxBridge when a script needs to run across different server stacks without rewriting framework, inventory, target and UI logic for every customer.</p>
+        <div class="callout">The bridge auto-detects compatible resources by default and can be locked to specific systems in the configuration.</div>
+      </section>
+
+      <section id="features" class="card">
+        <h2>Core features</h2>
+        <div class="grid">
+          <div class="feature"><h3>Framework adapter</h3><p>Unified player, identifier, job, name and money functions.</p></div>
+          <div class="feature"><h3>Inventory adapter</h3><p>Unified item checks, add/remove item, carry checks and stash registration.</p></div>
+          <div class="feature"><h3>Target adapter</h3><p>ox_target, qb-target and DrawText fallback through the same export.</p></div>
+          <div class="feature"><h3>UI adapter</h3><p>Notifications, context menus, input dialogs, progress circles and text UI through ox_lib.</p></div>
+          <div class="feature"><h3>Callbacks</h3><p>Client and server callbacks using ox_lib.</p></div>
+          <div class="feature"><h3>Society helper</h3><p>Common society money support for popular banking and management resources.</p></div>
+        </div>
+      </section>
+
+      <section id="install" class="card">
+        <h2>Installation</h2>
+        <pre><button class="copy">Copy</button><code>ensure ox_lib
+ensure oxmysql
+ensure brunx_bridge</code></pre>
+        <p>Ensure your selected framework, inventory and target resource before scripts that depend on BrunxBridge.</p>
+      </section>
+
+      <section id="configuration" class="card">
+        <h2>Configuration</h2>
+        <pre><button class="copy">Copy</button><code>Config.Framework = 'auto'
+Config.Inventory = 'auto'
+Config.Target = 'auto'</code></pre>
+        <p>Available fixed framework values: <span class="tag">qbox</span><span class="tag">qbcore</span><span class="tag">esx</span><span class="tag">ox</span><span class="tag">vrp</span><span class="tag">standalone</span></p>
+      </section>
+
+      <section id="exports" class="card">
+        <h2>Exports</h2>
+        <p class="lead">All exports are available through <code>exports.brunx_bridge</code>.</p>
+      </section>
+
+      <section id="client-exports" class="card">
+        <h2>Client exports</h2>
+        <table class="table"><thead><tr><th>Export</th><th>Description</th></tr></thead><tbody>
+          <tr><td>GetFramework()</td><td>Returns the detected client framework.</td></tr>
+          <tr><td>GetFrameworkObject()</td><td>Returns the native framework object when available.</td></tr>
+          <tr><td>GetPlayerData()</td><td>Returns cached player data.</td></tr>
+          <tr><td>GetJob()</td><td>Returns normalized job data.</td></tr>
+          <tr><td>HasJob(jobs)</td><td>Checks if the local player has one of the required jobs.</td></tr>
+          <tr><td>GetIdentifier()</td><td>Returns the local player identifier when available.</td></tr>
+          <tr><td>GetNameData()</td><td>Returns normalized name data.</td></tr>
+          <tr><td>Notify(data)</td><td>Shows an ox_lib notification.</td></tr>
+          <tr><td>Alert(data)</td><td>Shows an ox_lib alert dialog.</td></tr>
+          <tr><td>Context(data)</td><td>Registers and opens an ox_lib context menu.</td></tr>
+          <tr><td>RegisterMenu(data, cb)</td><td>Registers an ox_lib menu.</td></tr>
+          <tr><td>ShowMenu(id)</td><td>Opens a registered ox_lib menu.</td></tr>
+          <tr><td>Input(title, rows, options)</td><td>Shows an ox_lib input dialog.</td></tr>
+          <tr><td>Progress(data)</td><td>Runs an ox_lib progress circle.</td></tr>
+          <tr><td>ShowText(text, options)</td><td>Shows ox_lib text UI.</td></tr>
+          <tr><td>HideText()</td><td>Hides ox_lib text UI.</td></tr>
+          <tr><td>SkillCheck(difficulty, inputs)</td><td>Runs an ox_lib skill check.</td></tr>
+          <tr><td>AddBoxZone(id, coords, size, options)</td><td>Adds an interaction zone using the active target system.</td></tr>
+          <tr><td>RemoveZone(id)</td><td>Removes a target zone.</td></tr>
+          <tr><td>AddEntityTarget(entity, options)</td><td>Adds an entity target.</td></tr>
+          <tr><td>RemoveEntityTarget(entity)</td><td>Removes an entity target.</td></tr>
+          <tr><td>CallbackAwait(name, ...)</td><td>Calls a server callback.</td></tr>
+          <tr><td>RegisterCallback(name, cb)</td><td>Registers a client callback.</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="server-exports" class="card">
+        <h2>Server exports</h2>
+        <table class="table"><thead><tr><th>Export</th><th>Description</th></tr></thead><tbody>
+          <tr><td>GetFramework()</td><td>Returns the detected server framework.</td></tr>
+          <tr><td>GetPlayer(source)</td><td>Returns native player object when available.</td></tr>
+          <tr><td>GetIdentifier(source)</td><td>Returns a normalized player identifier.</td></tr>
+          <tr><td>GetJob(source)</td><td>Returns normalized job data.</td></tr>
+          <tr><td>HasJob(source, jobs)</td><td>Checks whether a player has a required job.</td></tr>
+          <tr><td>GetMoney(source, account)</td><td>Gets player money from cash, bank or another account.</td></tr>
+          <tr><td>AddMoney(source, account, amount, reason)</td><td>Adds player money.</td></tr>
+          <tr><td>RemoveMoney(source, account, amount, reason)</td><td>Removes player money.</td></tr>
+          <tr><td>GetInventory()</td><td>Returns the detected inventory adapter.</td></tr>
+          <tr><td>GetItem(source, item, metadata)</td><td>Returns item data.</td></tr>
+          <tr><td>GetItemCount(source, item, metadata)</td><td>Returns item amount.</td></tr>
+          <tr><td>HasItem(source, item, amount, metadata)</td><td>Checks if a player has enough of an item.</td></tr>
+          <tr><td>CanCarryItem(source, item, amount, metadata)</td><td>Checks whether a player can carry an item.</td></tr>
+          <tr><td>AddItem(source, item, amount, metadata, slot)</td><td>Adds an item to a player.</td></tr>
+          <tr><td>RemoveItem(source, item, amount, metadata, slot)</td><td>Removes an item from a player.</td></tr>
+          <tr><td>OpenInventory(source, invType, data)</td><td>Opens a supported inventory interface.</td></tr>
+          <tr><td>RegisterStash(id, label, slots, weight, owner, groups, coords)</td><td>Registers a stash where supported.</td></tr>
+          <tr><td>AddSocietyMoney(account, amount, reason)</td><td>Adds money to a society account.</td></tr>
+          <tr><td>RemoveSocietyMoney(account, amount, reason)</td><td>Removes money from a society account.</td></tr>
+          <tr><td>RegisterCallback(name, cb)</td><td>Registers a server callback.</td></tr>
+          <tr><td>CallbackAwait(name, source, ...)</td><td>Calls a client callback.</td></tr>
+        </tbody></table>
+      </section>
+
+      <section id="examples" class="card">
+        <h2>Examples</h2>
+        <h3>Client notification</h3>
+        <pre><button class="copy">Copy</button><code>exports.brunx_bridge:Notify({
+    title = 'Success',
+    description = 'Action completed.',
+    type = 'success'
+})</code></pre>
+        <h3>Server item check</h3>
+        <pre><button class="copy">Copy</button><code>local hasPhone = exports.brunx_bridge:HasItem(source, 'phone', 1)
+if not hasPhone then
+    TriggerClientEvent('brunx_bridge:client:notify', source, {
+        description = 'You need a phone.',
+        type = 'error'
+    })
+    return
+end</code></pre>
+        <h3>Target zone</h3>
+        <pre><button class="copy">Copy</button><code>exports.brunx_bridge:AddBoxZone('garage_counter', vec3(215.7, -810.1, 30.7), vec3(1.5, 1.5, 2.0), {
+    distance = 2.0,
+    options = {
+        {
+            label = 'Open menu',
+            icon = 'fa-solid fa-car',
+            groups = { mechanic = 0 },
+            onSelect = function()
+                exports.brunx_bridge:Notify('Garage opened')
+            end
+        }
+    }
+})</code></pre>
+      </section>
+
+      <section id="support" class="card">
+        <h2>Supported resources</h2>
+        <p><span class="tag">qbx_core</span><span class="tag">qb-core</span><span class="tag">es_extended</span><span class="tag">ox_core</span><span class="tag">vRP</span><span class="tag">ox_inventory</span><span class="tag">qb-inventory</span><span class="tag">lj-inventory</span><span class="tag">ps-inventory</span><span class="tag">qs-inventory</span><span class="tag">origen_inventory</span><span class="tag">codem-inventory</span><span class="tag">core_inventory</span><span class="tag">mf-inventory</span><span class="tag">ox_target</span><span class="tag">qb-target</span><span class="tag">ox_lib</span></p>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+  document.querySelectorAll('pre').forEach(pre=>{const b=pre.querySelector('.copy');if(!b)return;b.addEventListener('click',async()=>{await navigator.clipboard.writeText(pre.innerText.replace('Copy','').trim());b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1200)})})
+</script>
+</body>
+</html>
