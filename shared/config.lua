@@ -69,6 +69,10 @@ Config.DefaultNotify = {
     duration = 4500
 }
 
+
+
+
+
 Config.DefaultProgress = {
     canCancel = true,
     disable = {
@@ -77,3 +81,174 @@ Config.DefaultProgress = {
         combat = true
     }
 }
+
+
+
+
+
+Config.Elevators = true
+
+
+
+Config.DrawDistance = 10.0
+Config.InteractDistance = 2.0
+
+Config.RefreshActiveMapsEvery = 60000
+
+Config.Marker = {
+    enabled = true,
+    type = 1,
+    scale = vector3(1.0, 1.0, 0.5),
+    color = { r = 0, g = 150, b = 255, a = 200 },
+}
+
+Config.Notify = function(message, notifyType)
+    if lib and lib.notify then
+        lib.notify({
+            title = _L('elevator'),
+            description = message,
+            type = notifyType or 'inform'
+        })
+        return
+    end
+
+    BeginTextCommandThefeedPost('STRING')
+    AddTextComponentSubstringPlayerName(message)
+    EndTextCommandThefeedPostTicker(false, true)
+end
+
+
+
+
+-- Custom framework hook.
+-- Return:
+-- {
+--     job = 'ambulance',
+--     jobLabel = 'Ambulance',
+--     grade = 3,
+--     gradeLabel = 'Specialist',
+--     isBoss = false,
+--     jobType = 'ems'
+-- }
+Config.CustomGetPlayerJob = function(source)
+    return nil
+end
+
+-- These elevators are always loaded, regardless of map resource.
+Config.GlobalElevators = {
+    -- Example:
+    -- {
+    --     name = 'Pillbox Hospital',
+    --     showMarker = true,
+    --     floors = {
+    --         {
+    --             label = 'Lobby',
+    --             coords = vector4(0.0, 0.0, 0.0, 0.0),
+    --             jobLock = nil
+    --         }
+    --     }
+    -- }
+}
+
+-- Map based elevators.
+-- If the resource name is started, the elevators inside it become active.
+Config.MapElevators = {
+    ['brnx_vinemedicalcenter'] = {
+        {
+            name = 'Vinewood Medical Center',
+            showMarker = true,
+
+            floors = {
+                {
+                    label = 'Parking',
+                    coords = vector4(61.67, -407.33, 21.13, 338.30),
+                    jobLock = nil
+                },
+                {
+                    label = 'Reception',
+                    coords = vector4(59.17, -358.23, 41.13, 250.88),
+                    jobLock = nil
+                },
+                {
+                    label = '1st Floor',
+                    coords = vector4(59.35, -358.30, 46.68, 253.10),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = true,
+                            police = { minGrade = 1 },
+                            police_be = { minGrade = 1 },
+                        },
+                        jobTypes = {
+                            ems = true
+                        }
+                    }
+                },
+                {
+                    label = 'Medical Check-in Desk',
+                    coords = vector4(60.24, -391.39, 51.68, 62.65),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = true
+                        },
+                        jobTypes = {
+                            ems = true
+                        }
+                    }
+                },
+                {
+                    label = '2nd Floor',
+                    coords = vector4(59.00, -358.19, 51.68, 69.04),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = { minGrade = 2 },
+                        },
+                        jobTypes = {
+                            ems = { minGrade = 2 }
+                        }
+                    }
+                },
+                {
+                    label = '3rd Floor - Restricted Area',
+                    coords = vector4(60.02, -391.45, 56.53, 253.60),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = { minGrade = 4 },
+                            police = { minGrade = 3 },
+                            police_be = { minGrade = 3 },
+                            marechaussee = { minGrade = 2 },
+                        },
+                        jobTypes = {
+                            ems = { minGrade = 4 },
+                            leo = { minGrade = 3 },
+                        }
+                    }
+                },
+                {
+                    label = 'Management',
+                    coords = vector4(58.95, -358.00, 61.10, 250.00),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = { minGrade = 6, bossOnly = true },
+                        }
+                    }
+                },
+            }
+        }
+    },
+}
+function _L(key)
+    local lang = Config.Locale or 'en'
+    local locale = Locales[lang] or Locales['en']
+
+    return locale[key] or Locales['en'][key] or key
+end
