@@ -1,189 +1,143 @@
-Brunx.Client = Brunx.Client or {}
-Brunx.Client.Target = {
-    name = 'drawtext',
-    resource = nil,
-    drawZones = {},
-    entityTargets = {}
-}
+FW = FW or BrunxBridge or {}
+FW.Target = FW.Target or {}
 
-local Target = Brunx.Client.Target
+local Zones = {}
 
-local function canInteract(option, entity, distance, coords)
-    if option.groups and not Brunx.Client.Framework.HasJob(option.groups) then return false end
-    if option.canInteract then return option.canInteract(entity, distance, coords) end
-    return true
-end
-
-local function runOption(option, entity)
-    if option.onSelect then return option.onSelect({ entity = entity }) end
-    if option.event then
-        if option.serverEvent then TriggerServerEvent(option.event, option.args)
-        else TriggerEvent(option.event, option.args) end
-    end
+local function getTarget()
+    if Config.Target ~= 'auto' then return Config.Target end
+    if GetResourceState('ox_target') == 'started' then return 'ox_target' end
+    if GetResourceState('qb-target') == 'started' then return 'qb-target' end
+    return 'drawtext'
 end
 
 local function convertOxOptions(options)
     local converted = {}
-    for i, option in ipairs(options or {}) do
-        converted[i] = {
-            name = option.name or ('brunx_option_%s'):format(i),
-            label = option.label or _L('target_interact'),
+    for _, option in ipairs(options or {}) do
+        converted[#converted + 1] = {
+            name = option.name or option.label,
+            label = option.label or option.name,
             icon = option.icon,
             distance = option.distance,
             groups = option.groups,
             items = option.items,
             canInteract = option.canInteract,
-            onSelect = function(data) runOption(option, data.entity) end
+            onSelect = option.onSelect,
+            event = option.event,
+            serverEvent = option.serverEvent,
+            args = option.args
         }
     end
     return converted
 end
 
-local function convertQbOptions(options)
+local function convertQBOptions(options)
     local converted = {}
-    for i, option in ipairs(options or {}) do
-        converted[i] = {
-            num = i,
-            label = option.label or _L('target_interact'),
+    for _, option in ipairs(options or {}) do
+        converted[#converted + 1] = {
+            label = option.label or option.name,
             icon = option.icon,
-            item = option.item,
-            job = option.groups,
-            canInteract = function(entity, distance, data) return canInteract(option, entity, distance, GetEntityCoords(entity)) end,
-            action = function(entity) runOption(option, entity) end
+            action = option.onSelect,
+            event = option.event,
+            type = option.serverEvent and 'server' or 'client',
+            canInteract = option.canInteract,
+            job = option.job or option.groups,
+            item = option.item or option.items
         }
     end
     return converted
 end
 
-function Target.Init()
-    local resource, key = Brunx.Utils.detectResource(Config.ResourceNames.Targets, Config.Target)
-    if key == 'ox_target' then Target.name, Target.resource = 'ox_target', resource
-    elseif key == 'qb_target' then Target.name, Target.resource = 'qb-target', resource
-    else Target.name, Target.resource = 'drawtext', nil end
-    Brunx.Utils.debug('Target:', Target.name)
-end
+function FW.Target.AddBoxZone(id, data)
+    local target = getTarget()
+    data = data or {}
 
-function Target.AddBoxZone(id, coords, size, options)
-    options = options or {}
-    size = size or vec3(1.5, 1.5, 2.0)
-
-    if Target.name == 'ox_target' then
-        return exports[Target.resource]:addBoxZone({
+    if target == 'ox_target' then
+        exports.ox_target:addBoxZone({
             name = id,
-            coords = coords,
-            size = size,
-            rotation = options.rotation or 0.0,
-            debug = options.debug or false,
-            options = convertOxOptions(options.options or options)
+            coords = data.coords,
+            size = data.size or data.length and vec3(data.length, data.width or data.length, data.maxZ and ((data.maxZ - (data.minZ or data.coords.z)) or 2.0) or 2.0) or vec3(2.0, 2.0, 2.0),
+            rotation = data.rotation or data.heading or 0.0,
+            debug = data.debug or Config.Debug,
+            options = convertOxOptions(data.options)
         })
+        Zones[id] = { type = 'ox_target' }
+        return true
     end
 
-    if Target.name == 'qb-target' then
-        exports[Target.resource]:AddBoxZone(id, coords, size.x or size[1] or 1.5, size.y or size[2] or 1.5, {
+    if target == 'qb-target' then
+        exports['qb-target']:AddBoxZone(id, data.coords, data.length or 2.0, data.width or 2.0, {
             name = id,
-            heading = options.rotation or 0.0,
-            debugPoly = options.debug or false,
-            minZ = options.minZ or coords.z - 1.0,
-            maxZ = options.maxZ or coords.z + 1.5
+            heading = data.heading or data.rotation or 0.0,
+            debugPoly = data.debug or Config.Debug,
+            minZ = data.minZ,
+            maxZ = data.maxZ
         }, {
-            options = convertQbOptions(options.options or options),
-            distance = options.distance or Config.DrawText.distance
+            options = convertQBOptions(data.options),
+            distance = data.distance or 2.0
         })
-        return id
+        Zones[id] = { type = 'qb-target' }
+        return true
     end
 
-    Target.drawZones[id] = {
-        id = id,
-        coords = coords,
-        size = size,
-        options = options.options or options,
-        distance = options.distance or Config.DrawText.distance,
-        showing = false
-    }
-    return id
+    Zones[id] = { type = 'drawtext', data = data }
+    return true
 end
 
-function Target.RemoveZone(id)
-    if Target.name == 'ox_target' then return exports[Target.resource]:removeZone(id) end
-    if Target.name == 'qb-target' then return exports[Target.resource]:RemoveZone(id) end
-    Target.drawZones[id] = nil
-end
+function FW.Target.AddSphereZone(id, data)
+    local target = getTarget()
+    data = data or {}
 
-function Target.AddEntity(entity, options)
-    options = options or {}
-    if Target.name == 'ox_target' then
-        return exports[Target.resource]:addLocalEntity(entity, convertOxOptions(options.options or options))
+    if target == 'ox_target' then
+        exports.ox_target:addSphereZone({
+            name = id,
+            coords = data.coords,
+            radius = data.radius or 2.0,
+            debug = data.debug or Config.Debug,
+            options = convertOxOptions(data.options)
+        })
+        Zones[id] = { type = 'ox_target' }
+        return true
     end
-    if Target.name == 'qb-target' then
-        return exports[Target.resource]:AddTargetEntity(entity, { options = convertQbOptions(options.options or options), distance = options.distance or 2.0 })
-    end
-    Target.entityTargets[entity] = { entity = entity, options = options.options or options, distance = options.distance or 2.0, showing = false }
+
+    Zones[id] = { type = 'drawtext', data = data }
+    return true
 end
 
-function Target.RemoveEntity(entity)
-    if Target.name == 'ox_target' then return exports[Target.resource]:removeLocalEntity(entity) end
-    if Target.name == 'qb-target' then return exports[Target.resource]:RemoveTargetEntity(entity) end
-    Target.entityTargets[entity] = nil
+function FW.Target.AddEntity(entity, options)
+    local target = getTarget()
+    if target == 'ox_target' then
+        exports.ox_target:addLocalEntity(entity, convertOxOptions(options))
+        return true
+    end
+    if target == 'qb-target' then
+        exports['qb-target']:AddTargetEntity(entity, { options = convertQBOptions(options), distance = 2.0 })
+        return true
+    end
+    return false
 end
 
-CreateThread(function()
-    while true do
-        if Target.name ~= 'drawtext' then Wait(2000) goto continue end
-        local sleep = 500
-        local ped = PlayerPedId()
-        local playerCoords = GetEntityCoords(ped)
-        local activeText = nil
-        local activeOption = nil
-        local activeEntity = nil
+function FW.Target.RemoveZone(id)
+    local zone = Zones[id]
+    if not zone then return false end
+    if zone.type == 'ox_target' then exports.ox_target:removeZone(id) end
+    if zone.type == 'qb-target' then exports['qb-target']:RemoveZone(id) end
+    Zones[id] = nil
+    return true
+end
 
-        for _, zone in pairs(Target.drawZones) do
-            local dist = #(playerCoords - zone.coords)
-            if dist <= zone.distance then
-                for _, option in ipairs(zone.options) do
-                    if canInteract(option, nil, dist, zone.coords) then
-                        activeText = ('[E] %s'):format(option.label or _L('target_interact'))
-                        activeOption = option
-                        sleep = 0
-                        break
-                    end
-                end
-            end
-            if activeOption then break end
-        end
+function FW.Target.RemoveEntity(entity, labels)
+    local target = getTarget()
+    if target == 'ox_target' then exports.ox_target:removeLocalEntity(entity, labels) return true end
+    if target == 'qb-target' then exports['qb-target']:RemoveTargetEntity(entity, labels) return true end
+    return false
+end
 
-        if not activeOption then
-            for entity, entry in pairs(Target.entityTargets) do
-                if DoesEntityExist(entity) then
-                    local coords = GetEntityCoords(entity)
-                    local dist = #(playerCoords - coords)
-                    if dist <= entry.distance then
-                        for _, option in ipairs(entry.options) do
-                            if canInteract(option, entity, dist, coords) then
-                                activeText = ('[E] %s'):format(option.label or _L('target_interact'))
-                                activeOption = option
-                                activeEntity = entity
-                                sleep = 0
-                                break
-                            end
-                        end
-                    end
-                    if activeOption then break end
-                end
-            end
-        end
+function FW.Target.DrawText(data)
+    data = data or {}
+    BeginTextCommandDisplayHelp('STRING')
+    AddTextComponentSubstringPlayerName(data.text or data.label or '[E] Interact')
+    EndTextCommandDisplayHelp(0, false, true, -1)
+end
 
-        if activeOption then
-            Brunx.Client.UI.ShowText(activeText, { position = 'left-center' })
-            if IsControlJustPressed(0, Config.DrawText.interactKey) then
-                Brunx.Client.UI.HideText()
-                runOption(activeOption, activeEntity)
-                Wait(500)
-            end
-        else
-            Brunx.Client.UI.HideText()
-        end
-
-        Wait(sleep)
-        ::continue::
-    end
-end)
+exports('AddTargetZone', function(id, data) return FW.Target.AddBoxZone(id, data) end)
+exports('RemoveTargetZone', function(id) return FW.Target.RemoveZone(id) end)

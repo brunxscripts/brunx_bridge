@@ -13,7 +13,7 @@ Config.Inventory = 'auto'
 Config.Target = 'auto'
 
 -- ox_lib is required and used as the default UI layer.
-Config.Notify = 'ox_lib'
+Config.NotifySystem = 'ox_lib'
 Config.Menu = 'ox_lib'
 Config.Input = 'ox_lib'
 Config.Progress = 'ox_lib'
@@ -47,10 +47,12 @@ Config.ResourceNames = {
 
 Config.DefaultGroups = {
     police = true,
+    police_be = true,
     ambulance = true,
     mechanic = true,
     doj = true,
-    government = true
+    government = true,
+    marechaussee = true
 }
 
 Config.DrawText = {
@@ -69,10 +71,6 @@ Config.DefaultNotify = {
     duration = 4500
 }
 
-
-
-
-
 Config.DefaultProgress = {
     canCancel = true,
     disable = {
@@ -82,18 +80,12 @@ Config.DefaultProgress = {
     }
 }
 
-
-
-
-
+-- Elevators
 Config.Elevators = true
-
-
-
 Config.DrawDistance = 10.0
 Config.InteractDistance = 2.0
-
 Config.RefreshActiveMapsEvery = 60000
+Config.NotifyTitle = 'Lift'
 
 Config.Marker = {
     enabled = true,
@@ -102,62 +94,19 @@ Config.Marker = {
     color = { r = 0, g = 150, b = 255, a = 200 },
 }
 
-Config.Notify = function(message, notifyType)
-    if lib and lib.notify then
-        lib.notify({
-            title = _L('elevator'),
-            description = message,
-            type = notifyType or 'inform'
-        })
-        return
-    end
-
-    BeginTextCommandThefeedPost('STRING')
-    AddTextComponentSubstringPlayerName(message)
-    EndTextCommandThefeedPostTicker(false, true)
-end
-
-
-
-
--- Custom framework hook.
--- Return:
--- {
---     job = 'ambulance',
---     jobLabel = 'Ambulance',
---     grade = 3,
---     gradeLabel = 'Specialist',
---     isBoss = false,
---     jobType = 'ems'
--- }
+-- Optional custom framework hook.
+-- Return: { job='ambulance', jobLabel='Ambulance', grade=3, gradeLabel='Specialist', isBoss=false, jobType='ems', duty=true }
 Config.CustomGetPlayerJob = function(source)
     return nil
 end
 
--- These elevators are always loaded, regardless of map resource.
-Config.GlobalElevators = {
-    -- Example:
-    -- {
-    --     name = 'Pillbox Hospital',
-    --     showMarker = true,
-    --     floors = {
-    --         {
-    --             label = 'Lobby',
-    --             coords = vector4(0.0, 0.0, 0.0, 0.0),
-    --             jobLock = nil
-    --         }
-    --     }
-    -- }
-}
+Config.GlobalElevators = {}
 
--- Map based elevators.
--- If the resource name is started, the elevators inside it become active.
 Config.MapElevators = {
     ['brnx_vinemedicalcenter'] = {
         {
             name = 'Vinewood Medical Center',
             showMarker = true,
-
             floors = {
                 {
                     label = 'Parking',
@@ -188,16 +137,7 @@ Config.MapElevators = {
                 {
                     label = 'Medical Check-in Desk',
                     coords = vector4(60.24, -391.39, 51.68, 62.65),
-                    jobLock = {
-                        enabled = true,
-                        hideIfNoAccess = false,
-                        jobs = {
-                            ambulance = true
-                        },
-                        jobTypes = {
-                            ems = true
-                        }
-                    }
+                    jobLock = nil
                 },
                 {
                     label = '2nd Floor',
@@ -233,7 +173,18 @@ Config.MapElevators = {
                 },
                 {
                     label = 'Management',
-                    coords = vector4(58.95, -358.00, 61.10, 250.00),
+                    coords = vector4(59.33, -358.19, 56.53, 266.46),
+                    jobLock = {
+                        enabled = true,
+                        hideIfNoAccess = false,
+                        jobs = {
+                            ambulance = { minGrade = 6, bossOnly = true },
+                        }
+                    }
+                },
+                                {
+                    label = 'Heli',
+                    coords = vector4(57.96, -390.36, 72.42, 68.03),
                     jobLock = {
                         enabled = true,
                         hideIfNoAccess = false,
@@ -246,9 +197,3 @@ Config.MapElevators = {
         }
     },
 }
-function _L(key)
-    local lang = Config.Locale or 'en'
-    local locale = Locales[lang] or Locales['en']
-
-    return locale[key] or Locales['en'][key] or key
-end

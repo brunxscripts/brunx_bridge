@@ -1,10 +1,10 @@
-Brunx.Server = Brunx.Server or {}
-Brunx.Server.Callbacks = {}
+FW = FW or BrunxBridge or {}
 
-function Brunx.Server.Callbacks.Register(name, cb)
-    lib.callback.register(name, cb)
-end
+function FW.RegisterCallback(name, cb)
+    if lib and lib.callback and lib.callback.register then
+        lib.callback.register(name, cb)
+        return true
+    end
 
-function Brunx.Server.Callbacks.Await(name, source, ...)
-    return lib.callback.await(name, source, ...)
+    return false
 end

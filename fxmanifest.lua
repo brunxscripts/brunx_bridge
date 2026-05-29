@@ -2,10 +2,10 @@ fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
 
-name 'brunx_bridge'
+name 'brnx_bridge'
 author 'BrunxScript'
 description 'Future-proof bridge for ESX, QBCore, Qbox, OX, vRP and standalone resources.'
-version '1.0.0'
+version '1.0.1'
 
 shared_scripts {
     '@ox_lib/init.lua',
@@ -13,26 +13,35 @@ shared_scripts {
     'shared/locale.lua',
     'shared/utils.lua',
     'shared/init.lua',
-    'locales/locales.lua',
+    'locales/locales.lua'
 }
 
 client_scripts {
-    'modules/client/*.lua',
+    'modules/client/framework.lua',
+    'modules/client/callbacks.lua',
+    'modules/client/target.lua',
+    'modules/client/ui.lua',
+    'modules/client/elevators.lua',
     'client/main.lua'
 }
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'modules/server/*.lua',
+    'modules/server/framework.lua',
+    'modules/server/callbacks.lua',
+    'modules/server/inventory.lua',
+    'modules/server/society.lua',
+    'modules/server/elevators.lua',
     'server/main.lua'
 }
 
+ui_page 'html/index.html'
+
 files {
-    'locales/*.json',
     'html/index.html',
-    'server.lua'
+    'locales/*.json'
 }
 
 dependency 'ox_lib'
 
-provide 'brunx_bridge'
+provide 'brnx_bridge'

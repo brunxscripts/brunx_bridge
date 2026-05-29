@@ -1,10 +1,11 @@
-Brunx.Client = Brunx.Client or {}
-Brunx.Client.Callbacks = {}
+FW = FW or BrunxBridge or {}
 
-function Brunx.Client.Callbacks.Await(name, ...)
-    return lib.callback.await(name, false, ...)
-end
+function FW.TriggerCallback(name, cb, ...)
+    if lib and lib.callback then
+        lib.callback(name, false, cb, ...)
+        return
+    end
 
-function Brunx.Client.Callbacks.Register(name, cb)
-    lib.callback.register(name, cb)
+    TriggerServerEvent('brnx_bridge:server:callback', name, ...)
+    -- Framework callback fallbacks can be added here when needed.
 end

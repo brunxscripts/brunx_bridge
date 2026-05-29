@@ -1,9 +1,6 @@
 {
-  "no_permission": "You do not have permission to do this.",
-  "not_enough_items": "You do not have enough items.",
-  "inventory_full": "Your inventory is full.",
-  "action_cancelled": "Action cancelled.",
-  "target_interact": "Interact",
-  "error": "Something went wrong.",
-  "bridge_ready": "Bridge ready."
+  "elevator": "Elevator",
+  "useElevator": "Press E to use the elevator",
+  "locked": "Locked",
+  "noAccess": "You do not have access to this floor."
 }

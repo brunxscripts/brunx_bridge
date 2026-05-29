@@ -1,9 +1,6 @@
 {
-  "no_permission": "Je hebt hier geen toegang toe.",
-  "not_enough_items": "Je hebt niet genoeg items.",
-  "inventory_full": "Je inventory is vol.",
-  "action_cancelled": "Actie geannuleerd.",
-  "target_interact": "Interactie",
-  "error": "Er is iets misgegaan.",
-  "bridge_ready": "Bridge gereed."
+  "elevator": "Lift",
+  "useElevator": "Druk op E om de lift te gebruiken",
+  "locked": "Gesloten",
+  "noAccess": "Je hebt geen toegang tot deze verdieping."
 }

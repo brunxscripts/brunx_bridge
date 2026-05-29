@@ -1,30 +1,14 @@
-Locale = Locale or {}
-Locale.Data = {}
+Locales = Locales or {}
 
-local function loadLocale(locale)
-    local file = LoadResourceFile(GetCurrentResourceName(), ('locales/%s.json'):format(locale))
-    if not file then return {} end
-    local ok, decoded = pcall(json.decode, file)
-    if not ok or type(decoded) ~= 'table' then return {} end
-    return decoded
-end
+function _L(key, ...)
+    local lang = Config and Config.Locale or 'en'
+    local locale = Locales[lang] or Locales.en or {}
+    local fallback = Locales.en or {}
+    local str = locale[key] or fallback[key] or key
 
-function Locale.Init()
-    Locale.Data = loadLocale(Config.Locale or 'en')
-    if (Config.Locale or 'en') ~= 'en' then
-        local fallback = loadLocale('en')
-        for key, value in pairs(fallback) do
-            if Locale.Data[key] == nil then Locale.Data[key] = value end
-        end
+    if select('#', ...) > 0 then
+        return string.format(str, ...)
     end
-end
 
-function _L(key, vars)
-    local value = Locale.Data[key] or key
-    if vars then
-        for k, v in pairs(vars) do
-            value = value:gsub(('{{%s}}'):format(k), tostring(v))
-        end
-    end
-    return value
+    return str
 end
