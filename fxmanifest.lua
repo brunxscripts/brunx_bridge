@@ -1,5 +1,3 @@
-server_script '@overheid/src/include/server.lua'
-client_script '@overheid/src/include/client.lua'
 fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
