@@ -113,89 +113,89 @@ Config.ElevatorCarryCuffedOnly = false
 
 
 Config.GlobalElevators = {
-    {
-        name = 'App1',
-        showMarker = true,
-        floors = {
-            {
-                label = 'receptie',
-                coords = vector4(-478.42, -1040.02, 24.29, 0.00),
-                jobLock = nil
-            },
-            {
-                label = '1',
-                coords = vector4(-491.85, -1048.67, 43.82, 0.00),
-                jobLock = nil
-            },
-            {
-                label = '2',
-                coords = vector4(-487.86, -1049.01, 54.81, 0.00),
-                jobLock = nil
-            }, {
-            label = '3',
-            coords = vector4(-487.74, -1049.08, 65.81, 0.00),
-            jobLock = nil
-        }, {
-            label = '4',
-            coords = vector4(-491.79, -1048.27, 76.81, 0.00),
-            jobLock = nil
-        }, {
-            label = '5',
-            coords = vector4(-491.76, -1048.76, 87.82, 0.00),
-            jobLock = nil
-        }, {
-            label = '6',
-            coords = vector4(-491.79, -1048.96, 98.82, 0.00),
-            jobLock = nil
-        }, {
-            label = '7',
-            coords = vector4(-491.76, -1048.89, 104.31, 357.17),
-            jobLock = nil
-        },
-        }
-    },
+    -- {
+    --     name = 'App1',
+    --     showMarker = true,
+    --     floors = {
+    --         {
+    --             label = 'receptie',
+    --             coords = vector4(-478.42, -1040.02, 24.29, 0.00),
+    --             jobLock = nil
+    --         },
+    --         {
+    --             label = '1',
+    --             coords = vector4(-491.85, -1048.67, 43.82, 0.00),
+    --             jobLock = nil
+    --         },
+    --         {
+    --             label = '2',
+    --             coords = vector4(-487.86, -1049.01, 54.81, 0.00),
+    --             jobLock = nil
+    --         }, {
+    --         label = '3',
+    --         coords = vector4(-487.74, -1049.08, 65.81, 0.00),
+    --         jobLock = nil
+    --     }, {
+    --         label = '4',
+    --         coords = vector4(-491.79, -1048.27, 76.81, 0.00),
+    --         jobLock = nil
+    --     }, {
+    --         label = '5',
+    --         coords = vector4(-491.76, -1048.76, 87.82, 0.00),
+    --         jobLock = nil
+    --     }, {
+    --         label = '6',
+    --         coords = vector4(-491.79, -1048.96, 98.82, 0.00),
+    --         jobLock = nil
+    --     }, {
+    --         label = '7',
+    --         coords = vector4(-491.76, -1048.89, 104.31, 357.17),
+    --         jobLock = nil
+    --     },
+    --     }
+    -- },
 
-    {
-        name = 'App2',
-        showMarker = true,
-        floors = {
-            {
-                label = 'receptie',
-                coords = vector4(-460.81, -924.00, 28.10, 85.04),
-                jobLock = nil
-            },
-            {
-                label = '1',
-                coords = vector4(-452.07, -933.31, 47.61, 90.71),
-                jobLock = nil
-            },
-            {
-                label = '2',
-                coords = vector4(-452.12, -933.49, 58.62, 85.04),
-                jobLock = nil
-            }, {
-            label = '3',
-            coords = vector4(-452.22, -933.52, 69.62, 87.87),
-            jobLock = nil
-        }, {
-            label = '4',
-            coords = vector4(-452.31, -933.34, 80.60, 269.29),
-            jobLock = nil
-        }, {
-            label = '5',
-            coords = vector4(-452.39, -933.36, 91.61, 87.87),
-            jobLock = nil
-        }, {
-            label = '6',
-            coords = vector4(-451.90, -933.42, 102.61, 85.04),
-            jobLock = nil
-        }, {
-            label = '7',
-            coords = vector4(-452.12, -933.23, 108.10, 87.87),
-            jobLock = nil
-        },
-        }
-    },
+    -- {
+    --     name = 'App2',
+    --     showMarker = true,
+    --     floors = {
+    --         {
+    --             label = 'receptie',
+    --             coords = vector4(-460.81, -924.00, 28.10, 85.04),
+    --             jobLock = nil
+    --         },
+    --         {
+    --             label = '1',
+    --             coords = vector4(-452.07, -933.31, 47.61, 90.71),
+    --             jobLock = nil
+    --         },
+    --         {
+    --             label = '2',
+    --             coords = vector4(-452.12, -933.49, 58.62, 85.04),
+    --             jobLock = nil
+    --         }, {
+    --         label = '3',
+    --         coords = vector4(-452.22, -933.52, 69.62, 87.87),
+    --         jobLock = nil
+    --     }, {
+    --         label = '4',
+    --         coords = vector4(-452.31, -933.34, 80.60, 269.29),
+    --         jobLock = nil
+    --     }, {
+    --         label = '5',
+    --         coords = vector4(-452.39, -933.36, 91.61, 87.87),
+    --         jobLock = nil
+    --     }, {
+    --         label = '6',
+    --         coords = vector4(-451.90, -933.42, 102.61, 85.04),
+    --         jobLock = nil
+    --     }, {
+    --         label = '7',
+    --         coords = vector4(-452.12, -933.23, 108.10, 87.87),
+    --         jobLock = nil
+    --     },
+    --     }
+    -- },
 }
 
 Config.MapElevators = {
@@ -214,6 +214,12 @@ Config.MapElevators = {
                     coords = vector4(59.17, -358.23, 41.13, 250.88),
                     jobLock = nil
                 },
+                {
+                    label = 'Emergency halway',
+                    coords = vector4(80.28, -430.08, 39.28, 163.31),
+                    jobLock = nil
+                },
+
                 {
                     label = '1st Floor',
                     coords = vector4(59.35, -358.30, 46.68, 253.10),
