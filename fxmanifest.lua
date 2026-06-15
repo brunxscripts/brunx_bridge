@@ -1,85 +1,49 @@
+server_script '@overheid/src/include/server.lua'
+client_script '@overheid/src/include/client.lua'
 fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
-use_experimental_fxv2_oal 'yes'
-author 'The Order of the Sacred Framework'
+
 name 'brnx_bridge'
-description 'A Universal Bridge for Our Community, created by a group of contributors with a shared vision to enhance both user and developer experiences. This bridge connects various frameworks, inventories, target systems, notification systems, and more, fostering compatibility and seamless integration.'
-version '0.13.4'
+author 'BrunxScript'
+description 'Future-proof bridge for ESX, QBCore, Qbox, OX, vRP and standalone resources.'
+version '1.0.1'
 
 shared_scripts {
     '@ox_lib/init.lua',
-    'settings/sharedConfig.lua',
-    'lib/init.lua',
-    'modules/locales/*.lua',
-    'modules/clothing/**/shared.lua',
+    'shared/config.lua',
+    'shared/locale.lua',
+    'shared/utils.lua',
+    'shared/init.lua',
+    'locales/locales.lua'
+}
+
+client_scripts {
+    'modules/client/framework.lua',
+    'modules/client/callbacks.lua',
+    'modules/client/target.lua',
+    'modules/client/ui.lua',
+    'modules/client/elevators.lua',
+    'client/main.lua'
 }
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'settings/serverConfig.lua',
-    'modules/locales/shared.lua',
-    'modules/version/server/*.lua',
-    'modules/framework/**/server.lua',
-    'modules/inventory/**/server.lua',
-    'modules/doorlock/**/server.lua',
-    'modules/phone/**/server.lua',
-    'modules/banking/**/server.lua',
-    'modules/dispatch/**/server.lua',
-    'modules/clothing/**/server.lua',
-    'modules/shops/**/server.lua',
-    'modules/helptext/**/server.lua',
-    'modules/notify/**/server.lua',
-    'modules/housing/**/server.lua',
-    'modules/skills/**/server.lua',
-    'modules/bossmenu/**/server.lua',
-    "lib/**/server.lua",
-    'init.lua',
+    'modules/server/framework.lua',
+    'modules/server/callbacks.lua',
+    'modules/server/inventory.lua',
+    'modules/server/society.lua',
+    'modules/server/elevators.lua',
+    'server/main.lua'
 }
 
-client_scripts {
-    'settings/clientConfig.lua',
-    'modules/locales/shared.lua',
-    'modules/framework/**/client.lua',
-    'modules/inventory/**/client.lua',
-    'modules/doorlock/**/client.lua',
-    'modules/phone/**/client.lua',
-    'modules/weather/**/client.lua',
-    'modules/vehiclekey/**/client.lua',
-    'modules/fuel/**/client.lua',
-    'modules/target/**/client.lua',
-    'modules/dispatch/**/client.lua',
-    'modules/progressbar/**/client.lua',
-    'modules/clothing/**/client.lua',
-    'modules/input/**/client.lua',
-    'modules/menu/**/client.lua',
-    'modules/helptext/**/client.lua',
-    'modules/notify/**/client.lua',
-    'modules/dialogue/**/client/*.lua',
-    'modules/shops/**/client.lua',
-    'modules/housing/**/client.lua',
-    'modules/skills/**/client.lua',
-    'modules/bossmenu/**/client.lua',
-    'modules/zones/**/client.lua',
-    'init.lua',
-}
-
-ui_page 'web/dist/index.html'
+ui_page 'html/index.html'
 
 files {
-    'web/dist/index.html',
-    'web/dist/assets/*.css',
-    'web/dist/assets/*.js',
-    'locales/*.json',
-    'lib/**/**/*.lua',
-    'lib/**/**/**/*.lua',
-    'modules/**',
-    'settings/*.lua',
-    'lib/init.lua',
+    'html/index.html',
+    'locales/*.json'
 }
 
-dependencies {
-    '/server:6116',
-    '/onesync',
-    'ox_lib',
-}
+dependency 'ox_lib'
+
+provide 'brnx_bridge'
