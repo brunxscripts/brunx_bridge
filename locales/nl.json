@@ -2,5 +2,6 @@
   "elevator": "Lift",
   "useElevator": "Druk op E om de lift te gebruiken",
   "locked": "Gesloten",
-  "noAccess": "Je hebt geen toegang tot deze verdieping."
+  "noAccess": "Je hebt geen toegang tot deze verdieping.",
+  "go": "ga"
 }
