@@ -22,7 +22,7 @@ client_scripts {
     'modules/client/target.lua',
     'modules/client/ui.lua',
     'modules/client/elevators.lua',
-    'client/main.lua'
+    'client/*.lua'
 }
 
 server_scripts {
@@ -32,7 +32,7 @@ server_scripts {
     'modules/server/inventory.lua',
     'modules/server/society.lua',
     'modules/server/elevators.lua',
-    'server/main.lua'
+    'server/*.lua'
 }
 
 ui_page 'html/index.html'
