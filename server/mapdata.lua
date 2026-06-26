@@ -1,6 +1,5 @@
 local Config = {}
 
--- Change this to your actual GitHub Repository path
 Config.GitHubRepo = "brunxscripts/versions" -- Your central repo name
 Config.VersionFilename = "versions.json"
 Config.PatchCombinations = {
@@ -18,7 +17,6 @@ Config.PatchCombinations = {
     -- }
 }
 
--- Function to check for script updates on GitHub
 local function CheckResourceVersion()
     local resourceName = GetCurrentResourceName()
     local currentVersion = GetResourceMetadata(resourceName, 'version', 0)
@@ -41,7 +39,6 @@ local function CheckResourceVersion()
 
         local allVersions = json.decode(responseText)
 
-        -- Check if this specific resource exists in the central JSON database
         if allVersions and allVersions[resourceName] then
             local latestVersion = allVersions[resourceName]
 
